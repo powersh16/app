@@ -1,5 +1,5 @@
 # app
-shoes shop(page web)
+ # shoes shop(page web)
 1-when you download the files you must first have :
 -node js insatll in your machine it may come with npm or not so if not you must install it.
 -mongodb runnig on your machine .
