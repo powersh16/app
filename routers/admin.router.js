@@ -110,10 +110,16 @@ const adminBro = new AdminBro({
     },
   },
     { resource: require("../models/Produit"), options: {navigation: contentNavigation,
-      properties:{image:{components:{edit:AdminBro.bundle("./components/uploading-image.edit.tsx")}}},
+      properties:{images:{components:{edit:AdminBro.bundle("./components/uploading-image.edit.jsx")}}},
      
     }},
   ],
+  dashboard: {
+    handler: async () => {
+      return { some: 'output' }
+    },
+    component: AdminBro.bundle("./components/my-dashboard-component.jsx")
+  },
   locale: {
     translations: {
       labels: {

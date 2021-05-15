@@ -28,7 +28,9 @@
     "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "react": "^16.13.1"
+    "react": "^16.13.1",
+    "yarm": "^0.4.0",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
