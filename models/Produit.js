@@ -18,8 +18,8 @@ const ProduitSchema = new mongoose.Schema({
     required: true
   },
   images:{
-    type:Array,
-    required: true
+    type:String,
+  
   },
   couleur: {
     type: Array,

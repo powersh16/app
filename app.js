@@ -12,7 +12,8 @@ mongoose.connect( db,{ useNewUrlParser: true ,useUnifiedTopology: true } )
 app.use(expressLayouts);
 app.set("view engine","ejs");
 app.use(express.urlencoded({extended:false}));
-app.use(express.static("public"));
+app.use("/public",express.static("public"));
+app.use("/uploads",express.static("uploads"));
 
 const port=process.env.PORT||5000;
 // routing between pages.

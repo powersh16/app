@@ -1,21 +1,28 @@
+
 import React from 'react'
-import Label from '@admin-bro/design-system';
-import Box from '@admin-bro/design-system';
-import DropZone from '@admin-bro/design-system';
-import BasePropertyProps from '@admin-bro/design-system'
+import { Label, Box, DropZone, BasePropertyProps, DropZoneProps, DropZoneItem } from 'admin-bro'
 
-const Edit=()=>{
-  
+const Edit = (props) => {
+  const { property, onChange, record } = props
 
- return(
- 
- <Box>
-   <Label>Images</Label>
-   <DropZone onChange={console}/>
- </Box>
-  
- )
+  const handleDropZoneChange = (files) => {
+    onChange(property.name, files[0])
   }
 
+  const uploadedPhoto = record.params.images
+  const photoToUpload = record.params[property.name]
+
+  return (
+    <Box marginBottom="xxl">
+      <Label>{property.label}</Label>
+      <DropZone onChange={handleDropZoneChange}/>
+      {uploadedPhoto && !photoToUpload && (
+       
+        <DropZoneItem src={uploadedPhoto[i]} />
+        
+      )}
+    </Box>
+  )
+}
 
 export default Edit

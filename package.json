@@ -11,12 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@admin-bro/express": "^3.1.0",
-    "@admin-bro/upload": "^1.3.1",
-    "admin-bro": "^4.0.1",
+    "admin-bro": "^2.2.4",
     "admin-bro-expressjs": "^2.1.1",
-    "admin-bro-mongoose": "^0.5.2",
-    "argon2": "^0.27.2",
+    "admin-bro-mongoose": "^0.5.0",
     "bcryptjs": "^2.4.3",
     "bower": "^1.8.12",
     "connect-flash": "^0.1.1",
@@ -29,8 +26,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react": "^16.13.1",
-    "yarm": "^0.4.0",
-    "yarn": "^1.22.10"
+    "yarm": "^0.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

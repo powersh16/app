@@ -1,8 +1,9 @@
 const AdminBro = require('admin-bro')
 const AdminBroExpress = require('admin-bro-expressjs')
-const uploadFeature = require('@admin-bro/upload')
 const AdminBroMongoose = require('admin-bro-mongoose')
 const bcryptjs=require('bcryptjs')
+const path = require('path');
+const fs = require('fs');
 
 
 const mongoose = require('mongoose')
@@ -16,7 +17,7 @@ AdminBro.registerAdapter(AdminBroMongoose)
 */
 const contentNavigation = {
   name: 'PowerShoes',
-  icon: 'Shop',
+  icon: '/public/assets/img/icons/images/logo2_1.png',
 }
 const adminBro = new AdminBro({
   resources: [
@@ -110,20 +111,82 @@ const adminBro = new AdminBro({
     },
   },
     { resource: require("../models/Produit"), options: {navigation: contentNavigation,
-      properties:{images:{components:{edit:AdminBro.bundle("./components/uploading-image.edit.jsx")}}},
-     
+      properties:{images:{components:{
+        list:AdminBro.bundle("./components/upload-image-list.jsx"),
+        show:AdminBro.bundle("./components/upload-image-list.jsx"),
+        edit:AdminBro.bundle("./components/uploading-image.edit.jsx")}}},
+        actions:{
+          new:{
+            after:async (response, request, context) => {
+             
+              const { record, uploadImage } = context;
+            
+              if (record.isValid() && uploadImage) {
+              
+               const id= String(record.params._id);
+              
+                const filePath = path.join('uploads', id, uploadImage.name);
+                 fs.mkdir(path.dirname(filePath), { recursive: true },function(err) {
+                  if (err) {
+                    console.log(err)
+                  } else {
+                    
+                    console.log("New directory successfully created.")
+                  }
+                });
+                fs.readFile(uploadImage.path,(err,data)=>{
+                  if(err){console.log(err)}else{
+                    fs.writeFile(filePath,data,function(err) {
+                      if (err) {
+                     console.log(err)
+                      } else {
+                          console.log("New directory successfully created.")
+                             }
+                            });
+                  }
+                });
+               /* 
+               fs.writeFile(filePath,uploadImage.path,function(err) {
+                  if (err) {
+                 console.log(err)
+                  } else {
+                      console.log("New directory successfully created.")
+                         }
+                        });
+                        */
+                
+                await record.update({ images:`/${filePath}`});
+              }
+              return response;
+            },
+            before:async (request, context) => {
+              if (request.method === 'post') {
+               
+               
+                const  uploadImage = request.payload.images;
+                const otherParams=request.payload;
+              
+                // eslint-disable-next-line no-param-reassign
+              
+                context.uploadImage = uploadImage;
+              
+            
+                return {
+                  ...request,
+                  payload: otherParams,
+                };
+              }
+              return request;
+            },
+          },
+        },
+    
     }},
   ],
-  dashboard: {
-    handler: async () => {
-      return { some: 'output' }
-    },
-    component: AdminBro.bundle("./components/my-dashboard-component.jsx")
-  },
   locale: {
     translations: {
       labels: {
-        Produit: 'Produites',User:"Clients",Admins:"Administrateurs",MyFirstDatabase:"PowerShoes"
+        Produit: 'Produits',User:"Clients",Admins:"Administrateurs",myFirstDatabase:"PowerShoes"
       }
     }
   },
